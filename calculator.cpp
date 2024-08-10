@@ -13,15 +13,15 @@ using namespace std;
 // struct to allow two numbers to be returned from a function
 struct Numbers 
 {
-    int firstNumber;
-    int secondNumber;
+    float firstNumber;
+    float secondNumber;
 };
 
 // function declarations for compiler
 string selectOperation();
 Numbers selectNumbers();
 void restartCalculator();
-float solveEquation(int num1, int num2, string selectedOperator);
+float solveEquation(float num1, float num2, string selectedOperator);
 
 int main()
 {
@@ -46,23 +46,23 @@ int main()
 }
 
 // function to solve equation based on provided numbers and operator
-float solveEquation(int num1, int num2, string selectedOperator)
+float solveEquation(float num1, float num2, string selectedOperator)
 {
     float solution;
     if (selectedOperator == "+") {
-        solution = (float)num1 + (float)num2;
+        solution = num1 + num2;
     } 
     else if (selectedOperator == "-")
     {
-        solution = (float)num1 - (float)num2;
+        solution = num1 - num2;
     }
     else if (selectedOperator == "*")
     {
-        solution = (float)num1 * (float)num2;
+        solution = num1 * num2;
     }
     else if (selectedOperator == "/")
     {
-        solution = (float)num1 / (float)num2;
+        solution = num1 / num2;
     }
     return solution;
 };
@@ -75,7 +75,14 @@ string selectOperation()
 
     cout << "Welcome to The Calculator\n" << "Which operation would you like to you use?\n" <<
         "1. Addition\n" << "2. Subtraction\n" << "3. Multiplication\n" << "4. Division\n";
-    cin >> userSelectedOperator;
+    
+    // while inputs do not match type, display error
+    while (!(cin >> userSelectedOperator)) 
+    {
+        cout << "Invalid Selection... Please try again...\n";
+        cin.clear();
+        cin.ignore(123, '\n');
+    };
 
     if (userSelectedOperator == 1) {
         currentOperator = "+";
@@ -92,11 +99,6 @@ string selectOperation()
     {
         currentOperator = "/";
     }
-    else
-    {
-        cout << "\nInvalid Selection... Please try again...\n\n";
-        selectOperation();
-    }
     return currentOperator;
 }
 
@@ -106,7 +108,13 @@ Numbers selectNumbers()
     Numbers userNumbers;
   
     cout << "Enter two numbers to be used with your selected Operator: \n";
-    cin >> userNumbers.firstNumber >> userNumbers.secondNumber;
+    // while inputs do not match type, display error
+    while (!(cin >> userNumbers.firstNumber >> userNumbers.secondNumber))
+    {
+        cout << "ERROR: Please end a valid digit... \n";
+        cin.clear();
+        cin.ignore(123, '\n');
+    };
 
     return userNumbers;
 }
@@ -134,5 +142,4 @@ void restartCalculator()
     {
         cout << "Good Bye!";
     }
-
 }
